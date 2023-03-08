@@ -1,6 +1,27 @@
-<a href="#" id="ai1wm-export-file"><br>
-<b>Fatal error</b>:  Uncaught Error: Call to undefined function _e() in C:\xampp\htdocs\plant-p2\wp-content\plugins\all-in-one-wp-migration\lib\view\export\button-file.php:27
-Stack trace:
-#0 {main}
-  thrown in <b>C:\xampp\htdocs\plant-p2\wp-content\plugins\all-in-one-wp-migration\lib\view\export\button-file.php</b> on line <b>27</b><br>
-</a>
+<?php
+/**
+ * Copyright (C) 2014-2018 ServMask Inc.
+ *
+ * This program is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ *
+ * This program is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ *
+ * You should have received a copy of the GNU General Public License
+ * along with this program.  If not, see <http://www.gnu.org/licenses/>.
+ *
+ * ███████╗███████╗██████╗ ██╗   ██╗███╗   ███╗ █████╗ ███████╗██╗  ██╗
+ * ██╔════╝██╔════╝██╔══██╗██║   ██║████╗ ████║██╔══██╗██╔════╝██║ ██╔╝
+ * ███████╗█████╗  ██████╔╝██║   ██║██╔████╔██║███████║███████╗█████╔╝
+ * ╚════██║██╔══╝  ██╔══██╗╚██╗ ██╔╝██║╚██╔╝██║██╔══██║╚════██║██╔═██╗
+ * ███████║███████╗██║  ██║ ╚████╔╝ ██║ ╚═╝ ██║██║  ██║███████║██║  ██╗
+ * ╚══════╝╚══════╝╚═╝  ╚═╝  ╚═══╝  ╚═╝     ╚═╝╚═╝  ╚═╝╚══════╝╚═╝  ╚═╝
+ */
+?>
+
+<a href="#" id="ai1wm-export-file"><?php _e( 'File', AI1WM_PLUGIN_NAME ); ?></a>
