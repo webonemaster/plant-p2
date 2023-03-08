@@ -1,19 +1,14 @@
 <?php
 namespace Simply_Static;
 ?>
-<div class="simply-static-admin-header">
-	<div class="logo"><img src="<?php echo esc_url( SIMPLY_STATIC_URL . '/assets/simply-static-logo.svg' ); ?>" /></div>
-				<div class="info-links">
-					<?php do_action( 'simply_static_admin_info_links' ); ?>
-				</div>
-			</div>
+
+<h1><?php _e( 'Simply Static &rsaquo; Settings', 'simply-static' ); ?></h1>
 
 <div class='wrap' id='settingsPage'>
 
 	<h2 id='sistTabs' class='nav-tab-wrapper'>
 		<a class='nav-tab' id='general-tab' href='#tab-general'><?php _e( 'General', 'simply-static' ); ?></a>
 		<a class='nav-tab' id='include-exclude-tab' href='#tab-include-exclude'><?php _e( 'Include/Exclude', 'simply-static' ); ?></a>
-		<?php do_action( 'simply_static_settings_view_tab' ); ?>
 		<a class='nav-tab' id='advanced-tab' href='#tab-advanced'><?php _e( 'Advanced', 'simply-static' ); ?></a>
 		<a class='nav-tab' id='reset-settings-tab' href='#tab-reset-settings'><?php _e( 'Reset', 'simply-static' ); ?></a>
 	</h2>
@@ -89,12 +84,9 @@ namespace Simply_Static;
 							<select name='delivery_method' id='deliveryMethod'>
 								<option value='zip' <?php Util::selected_if( $this->delivery_method === 'zip' ) ?>><?php _e( "ZIP Archive", 'simply-static' ); ?></option>
 								<option value='local' <?php Util::selected_if( $this->delivery_method === 'local' ) ?>><?php _e( "Local Directory", 'simply-static' ); ?></option>
-                                <option value='simply-cdn' <?php Util::selected_if( $this->delivery_method === 'simply-cdn' ) ?>><?php _e( "Simply CDN", 'simply-static' ); ?></option>
-								<?php do_action( 'simply_static_delivery_methods' ); ?>
 							</select>
 						</td>
 					</tr>
-					<?php do_action( 'simply_static_delivery_method_description' ); ?>
 					<tr class='delivery-method zip'>
 						<th></th>
 						<td>
@@ -120,52 +112,6 @@ namespace Simply_Static;
 							</div>
 						</td>
 					</tr>
-                    <tr class='delivery-method simply-cdn'>
-                        <th></th>
-                        <td>
-                            <p>
-                                <?php echo sprintf(__("The fast and easy way to bring your static website online. %s handles hosting, performance, security and form submissions for your static site.", 'simply-static' ), '<a target="_blank" href="https://simplycdn.io">Simply CDN</a>'); ?>
-                            </p>
-                        </td>
-                    </tr>
-                    <tr class='delivery-method simply-cdn'>
-                        <th>
-                            <label for='sch_token'><?php _e( "Security Token", 'simply-static' );?></label>
-                        </th>
-                        <td>
-                            <p>
-		                        <?php esc_html_e( 'Copy and paste the Security Token from your project and click connect.', 'simply-static' ); ?>
-                            </p>
-                            <p>
-                                <input aria-describedby='securityTokenHelpBlock' type='text' id='sch_token' name='sch_token' value='<?php echo esc_attr( get_option('sch_token') ); ?>' class='widefat' />
-                                <span class="button button-secondary" id="simply-cdn-connect"><?php esc_html_e( 'Connect', 'simply-static' ); ?></span>
-                            </p>
-                        </td>
-                    </tr>
-                    <?php
-                        if ( is_network_admin() ) {
-                            $this->allow_subsites = is_null( $this->allow_subsites ) ? 'yes' : $this->allow_subsites;
-                            ?>
-                            <tr>
-                                <th>
-                                    <label for='local_dir'><?php _e( "Allow Sites to use Simply Static?", 'simply-static' );?></label>
-                                </th>
-                                <td>
-                                    <div>
-                                        <label>
-                                            <input <?php checked( $this->allow_subsites, 'yes' ); ?> type='radio' name='allow_subsites' value="yes" /> Yes
-                                        </label>
-                                    </div>
-                                    <div>
-                                        <label>
-                                            <input <?php checked( $this->allow_subsites, 'no' ); ?> type='radio' name='allow_subsites' value="no" /> No
-                                        </label>
-                                    </div>
-                                </td>
-                            </tr>
-                            <?php
-                        }
-                    ?>
 					<tr>
 						<th></th>
 						<td>
@@ -269,7 +215,7 @@ namespace Simply_Static;
 				</tbody>
 			</table>
 		</div>
-		<?php do_action( 'simply_static_settings_view_form' ); ?>
+
 		<div id='advanced' class='tab-pane'>
 			<h2 class="title"><?php _e( "Temporary Files", 'simply-static' ); ?></h2>
 			<p><?php _e( "Your static files are temporarily saved to a directory before being copied to their destination or creating a ZIP.", 'simply-static' ); ?></p>
@@ -288,8 +234,21 @@ namespace Simply_Static;
 							</div>
 						</td>
 					</tr>
+					<tr>
+						<th>
+							<label><?php _e( "Delete Temporary Files", 'simply-static' ); ?></label>
+						</th>
+						<td>
+							<label>
+								<input name='delete_temp_files' value='0' type='hidden' />
+								<input aria-describedby='deleteTempFilesHelpBlock' name='delete_temp_files' id='deleteTempFiles' value='1' type='checkbox' <?php Util::checked_if( $this->delete_temp_files === '1' ); ?> />
+								<?php _e( "Delete temporary files at the end of the job", 'simply-static' ); ?>
+							</label>
+						</td>
+					</tr>
 				</tbody>
 			</table>
+
 			<h2 class="title"><?php _e( "HTTP Basic Authentication", 'simply-static' ); ?></h2>
 			<p><?php _e( "If you've secured WordPress with HTTP Basic Auth you can specify the username and password to use below.", 'simply-static' ); ?></p>
 			<?php if ( $this->http_basic_auth_digest != null ) : ?>
@@ -326,40 +285,7 @@ namespace Simply_Static;
 					</tr>
 				</tbody>
 			</table>
-            <table class='form-table'>
-                <tbody>
-                <tr>
-                    <th></th>
-                    <td>
-                        <p class='submit'>
-                            <input class='button button-primary' type='submit' name='save' value='<?php _e( "Save Changes", 'simply-static' );?>' />
-                        </p>
-                    </td>
-                </tr>
-                </tbody>
-            </table>
-			<h2 class="title"><?php _e( "Additional Settings", 'simply-static' ); ?></h2>
-			<p><?php esc_html_e( 'Here you can configure some additional settings like clearing the local directory before running an export or activating force replacement for all URLs.', 'simply-static' ); ?></p>
-			<table class='form-table'  id='additional-settings'>
-				<tbody>
-                    <tr>
-                        <th>
-                            <label for='force_replace_url'><?php _e( "Force URL replacements", 'simply-static' ); ?></label>
-                        </th>
-                        <td>
-                            <input type="checkbox" name="force_replace_url" id="force_replace_url" <?php Util::checked_if( $this->force_replace_url === 'on' ); ?> />
-                        </td>
-                    </tr>
-                    <tr>
-                        <th>
-                            <label for='clear_directory_before_export'><?php _e( "Clear local directory before export", 'simply-static' ); ?></label>
-                        </th>
-                        <td>
-                            <input type="checkbox" name="clear_directory_before_export" id="clear_directory_before_export" <?php Util::checked_if( $this->clear_directory_before_export === 'on' ); ?> />
-                        </td>
-                    </tr>
-				</tbody>
-			</table>
+
 			<table class='form-table'>
 				<tbody>
 					<tr>
@@ -399,4 +325,5 @@ namespace Simply_Static;
 		</div>
 
 	</form>
+
 </div>
